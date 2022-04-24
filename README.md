@@ -99,3 +99,35 @@ ORDER BY
 LIMIT
   10
 ```
+#### capacity at popular stations:
+```sql
+with popular_station as(
+SELECT
+start_station_id,
+count (*) as num_trips
+FROM
+"bigquery-public-data.new_york_citibike.citibike_trips"
+GROUP BY
+1
+HAVING
+start station id is NOT NULL
+)
+select
+station_id,
+name,
+capacity,
+num_trips
+from
+     (select
+      station_id,
+      name,
+      capacity,
+      num_trips from popular_station as e
+      inner join "bigquery-public-data.new_york_citibike.citibike_stations"as a on
+       e.start_station id = a.station_ id
+      order by
+      num_trips desc
+      Limit 20)
+ORDER BY
+capacity desc
+```
